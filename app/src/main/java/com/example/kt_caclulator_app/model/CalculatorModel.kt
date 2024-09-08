@@ -16,7 +16,13 @@ class CalculatorModel : ViewModel() {
             '+' -> result = num1.toDouble() + num2.toDouble()
             '-' -> result = num1.toDouble() - num2.toDouble()
             '*' -> result = num1.toDouble() * num2.toDouble()
-            '/' -> result = num1.toDouble() / num2.toDouble()
+            '/' -> {
+                if (num2 == 0) {
+                    result = Double.NaN
+                } else {
+                    result = num1.toDouble() / num2.toDouble()
+                }
+            }
         }
         Log.d(LOG_TAG, "Result: $result")
         return result
