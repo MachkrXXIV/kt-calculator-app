@@ -3,7 +3,7 @@ package com.example.kt_caclulator_app.model
 import android.util.Log
 import androidx.lifecycle.ViewModel
 
-class CalculatorModel : ViewModel() {
+class CalculatorModel() {
     private val LOG_TAG = "CalculatorModel"
     private var result : Double = 0.0
     private var prevResult : Double = 0.0
