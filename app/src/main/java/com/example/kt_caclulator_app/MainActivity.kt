@@ -10,6 +10,8 @@ import com.example.kt_caclulator_app.model.CalculatorModel
 import com.example.kt_caclulator_app.viewModel.CalculatorViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    // allows us for viewModel to persist longer than activity
     private val calculatorViewModel: CalculatorViewModel by viewModels {
         CalculatorViewModel.CalculatorViewModelFactory((application as CalculatorApplication).calculatorModel)
     }
