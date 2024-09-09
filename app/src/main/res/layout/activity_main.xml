@@ -32,10 +32,8 @@
 
             <Button
                 android:id="@+id/btnDivide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:text="@string/btnDivide"
+                style="@style/calcButton"
                 app:layout_constraintBottom_toTopOf="@id/btnMultiply"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -47,10 +45,8 @@
 
             <Button
                 android:id="@+id/btnMultiply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:text="@string/btnMultiply"
+                style="@style/calcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnMinus"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -62,10 +58,8 @@
 
             <Button
                 android:id="@+id/btnMinus"
-                style="@style/calcButton"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
                 android:text="@string/btnMinus"
+                style="@style/calcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnPlus"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -77,9 +71,8 @@
 
             <Button
                 android:id="@+id/btnPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/btnPlus"
+                style="@style/calcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnEqual"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -91,9 +84,8 @@
 
             <Button
                 android:id="@+id/btnEqual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/btnEqual"
+                style="@style/calcButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
