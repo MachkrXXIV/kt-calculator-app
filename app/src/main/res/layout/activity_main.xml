@@ -20,7 +20,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="382dp"
+        android:layout_height="420dp"
         android:stretchColumns="1"
         android:background="@color/dark_neutral_contrast"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,6 +31,24 @@
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnClear"
+                android:text="@string/btnClear"
+                style="@style/CalcButton"
+                app:layout_constraintEnd_toOf="parent" />
+
+            <Button
+                android:id="@+id/btnUndo"
+                android:text="@string/btnUndo"
+                style="@style/CalcButton"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnSign"
+                android:text="@string/btnSign"
+                style="@style/CalcButton"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btnDivide"
@@ -46,6 +64,27 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/btnSeven"
+                android:text="@string/btnSeven"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnFour"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnEight"
+                android:text="@string/btnEight"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnFive"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnNine"
+                android:text="@string/btnNine"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnSix"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
                 android:id="@+id/btnMultiply"
                 android:text="@string/btnMultiply"
                 style="@style/CalcButton"
@@ -57,6 +96,27 @@
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnFour"
+                android:text="@string/btnFour"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnOne"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnFive"
+                android:text="@string/btnFive"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnTwo"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnSix"
+                android:text="@string/btnSix"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnThree"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btnMinus"
@@ -72,6 +132,27 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/btnOne"
+                android:text="@string/btnOne"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnDot"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnTwo"
+                android:text="@string/btnTwo"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnZero"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnThree"
+                android:text="@string/btnThree"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toTopOf="@+id/btnEqual"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
                 android:id="@+id/btnPlus"
                 android:text="@string/btnPlus"
                 style="@style/CalcButton"
@@ -83,6 +164,21 @@
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnZero"
+                android:text="@string/btnZero"
+                android:layout_weight="2"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnDot"
+                android:text="@string/btnDot"
+                style="@style/CalcButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btnEqual"
