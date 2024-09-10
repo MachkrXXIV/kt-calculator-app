@@ -2,7 +2,7 @@
     <string name="app_name">kt-caclulator-app</string>
     <string name="btnPlus">+</string>
     <string name="btnMinus">-</string>
-    <string name="btnMultiply">X</string>
+    <string name="btnMultiply">x</string>
     <string name="btnDivide">/</string>
     <string name="btnUndo">C</string>
     <string name="btnEqual">=</string>
