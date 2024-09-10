@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_neutral"
     tools:context=".MainActivity">
 
     <TextView
@@ -18,9 +19,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="382dp"
         android:stretchColumns="1"
+        android:background="@color/dark_neutral_contrast"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -33,7 +35,7 @@
             <Button
                 android:id="@+id/btnDivide"
                 android:text="@string/btnDivide"
-                style="@style/calcButton"
+                style="@style/CalcButton"
                 app:layout_constraintBottom_toTopOf="@id/btnMultiply"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -46,7 +48,7 @@
             <Button
                 android:id="@+id/btnMultiply"
                 android:text="@string/btnMultiply"
-                style="@style/calcButton"
+                style="@style/CalcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnMinus"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -59,7 +61,7 @@
             <Button
                 android:id="@+id/btnMinus"
                 android:text="@string/btnMinus"
-                style="@style/calcButton"
+                style="@style/CalcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnPlus"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -72,7 +74,7 @@
             <Button
                 android:id="@+id/btnPlus"
                 android:text="@string/btnPlus"
-                style="@style/calcButton"
+                style="@style/CalcButton"
                 app:layout_constraintBottom_toTopOf="@+id/btnEqual"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>
@@ -85,7 +87,7 @@
             <Button
                 android:id="@+id/btnEqual"
                 android:text="@string/btnEqual"
-                style="@style/calcButton"
+                style="@style/CalcButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </TableRow>

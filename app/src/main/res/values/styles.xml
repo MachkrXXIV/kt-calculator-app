@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="calcButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:background">@drawable/rounded_button</item>
+    <style name="CalcButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/dark_neutral_contrast</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">24sp</item>
         <item name="android:layout_width">wrap_content</item>

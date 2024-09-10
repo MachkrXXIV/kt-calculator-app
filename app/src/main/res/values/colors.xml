@@ -3,7 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="grey">#EEF0F4</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_neutral" >#202128</color>
+    <color name="dark_neutral">#202128</color>
+    <color name="dark_neutral_contrast">#30323C</color>
     <color name="light_neutral">#F9F9F9</color>
     <color name="red">#ff6b6b</color>
     <color name="teal">#4ecdc4</color>
