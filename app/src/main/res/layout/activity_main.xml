@@ -73,6 +73,7 @@
 
             <Button
                 android:id="@+id/btnDivide"
+                android:tag="operator"
                 style="@style/CalcButton"
                 android:text="@string/btnDivide"
                 android:textColor="@color/teal"
@@ -87,6 +88,7 @@
 
             <Button
                 android:id="@+id/btnSeven"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnSeven"
                 app:layout_constraintBottom_toTopOf="@+id/btnFour"
@@ -94,6 +96,7 @@
 
             <Button
                 android:id="@+id/btnEight"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnEight"
                 app:layout_constraintBottom_toTopOf="@+id/btnFive"
@@ -101,6 +104,7 @@
 
             <Button
                 android:id="@+id/btnNine"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnNine"
                 app:layout_constraintBottom_toTopOf="@+id/btnSix"
@@ -108,6 +112,7 @@
 
             <Button
                 android:id="@+id/btnMultiply"
+                android:tag="operator"
                 style="@style/CalcButton"
                 android:text="@string/btnMultiply"
                 android:textColor="@color/teal"
@@ -122,6 +127,7 @@
 
             <Button
                 android:id="@+id/btnFour"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnFour"
                 app:layout_constraintBottom_toTopOf="@+id/btnOne"
@@ -129,6 +135,7 @@
 
             <Button
                 android:id="@+id/btnFive"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnFive"
                 app:layout_constraintBottom_toTopOf="@+id/btnTwo"
@@ -136,6 +143,7 @@
 
             <Button
                 android:id="@+id/btnSix"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnSix"
                 app:layout_constraintBottom_toTopOf="@+id/btnThree"
@@ -143,6 +151,7 @@
 
             <Button
                 android:id="@+id/btnMinus"
+                android:tag="operator"
                 style="@style/CalcButton"
                 android:text="@string/btnMinus"
                 android:textColor="@color/teal"
@@ -157,6 +166,7 @@
 
             <Button
                 android:id="@+id/btnOne"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnOne"
                 app:layout_constraintBottom_toTopOf="@+id/btnDot"
@@ -164,6 +174,7 @@
 
             <Button
                 android:id="@+id/btnTwo"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnTwo"
                 app:layout_constraintBottom_toTopOf="@+id/btnZero"
@@ -171,6 +182,7 @@
 
             <Button
                 android:id="@+id/btnThree"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:text="@string/btnThree"
                 app:layout_constraintBottom_toTopOf="@+id/btnEqual"
@@ -178,6 +190,7 @@
 
             <Button
                 android:id="@+id/btnPlus"
+                android:tag="operator"
                 style="@style/CalcButton"
                 android:text="@string/btnPlus"
                 android:textColor="@color/teal"
@@ -192,6 +205,7 @@
 
             <Button
                 android:id="@+id/btnZero"
+                android:tag="digit"
                 style="@style/CalcButton"
                 android:layout_weight="2"
                 android:text="@string/btnZero"

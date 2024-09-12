@@ -24,12 +24,12 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
     private val _uiState = MutableStateFlow(CalculatorUiState())
     val uiState: StateFlow<CalculatorUiState> = _uiState.asStateFlow()
 
-    fun onDigitClick(digit: Int) {
+    fun onDigitClick(digit: String) {
         Log.d(LOG_TAG, "Digit $digit clicked")
         _uiState.update {
             it.copy(
-                operand1 = it.operand1 * 10 + digit,
-                fullOperation = "${it.operand1 * 10 + digit}"
+                operand1 = it.operand1 * 10 + digit.toDouble(),
+                fullOperation = "${it.operand1 * 10 + digit.toDouble()}"
 
             )
         }
@@ -52,7 +52,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
         val op = when (_uiState.value.operator) {
             "+" -> Operator.ADD
             "-" -> Operator.SUBTRACT
-            "*" -> Operator.MULTIPLY
+            "x" -> Operator.MULTIPLY
             "/" -> Operator.DIVIDE
             else -> Operator.ADD
         }
@@ -66,6 +66,21 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 result = result,
                 prevResult = result,
                 fullOperation = "${it.operand2} ${it.operator} ${it.operand1} = $result"
+            )
+        }
+    }
+
+    fun onClearClick() {
+        Log.d(LOG_TAG, "Clear clicked")
+        calculatorModel.clear()
+        _uiState.update {
+            it.copy(
+                result = 0.0,
+                prevResult = 0.0,
+                operand1 = 0.0,
+                operand2 = 0.0,
+                operator = "",
+                fullOperation = ""
             )
         }
     }

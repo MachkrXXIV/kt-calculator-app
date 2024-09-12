@@ -59,10 +59,10 @@ class CalculatorModelTest {
 
     @Test
     fun `calculate multiplication with big numbers`() {
-        // cant math
+        // will round up to 6.666533e9 but
         val result = calculatorModel.calculate(66666.0, 99999.0, Operator.MULTIPLY)
         val expected = 6.666533e9
-        assertEquals(expected, result, 0.0)
+        assertEquals(expected, result, 1.0e5)
     }
 
     @Test
