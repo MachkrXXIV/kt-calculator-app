@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">kt-caclulator-app</string>
+    <string name="calculationDefaultDisplay">Trust me</string>
+    <string name="resultDefaultDisplay">this works!</string>
     <string name="btnPlus">+</string>
     <string name="btnMinus">-</string>
     <string name="btnMultiply">x</string>

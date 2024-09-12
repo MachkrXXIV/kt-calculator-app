@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.update
 data class CalculatorUiState(
     val result: Double = 0.0,
     val prevResult: Double = 0.0,
-    val operand1: Double = 0.0,
-    val operand2: Double = 0.0,
+    val operand1: String = "",
+    val operand2: String = "",
     val operator: String = "",
     val fullOperation: String = "",
 )
@@ -27,10 +27,10 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
     fun onDigitClick(digit: String) {
         Log.d(LOG_TAG, "Digit $digit clicked")
         _uiState.update {
+            val newOperand1 = it.operand1 + digit
             it.copy(
-                operand1 = it.operand1 * 10 + digit.toDouble(),
-                fullOperation = "${it.operand1 * 10 + digit.toDouble()}"
-
+                operand1 = newOperand1,
+                fullOperation = newOperand1
             )
         }
     }
@@ -41,8 +41,8 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             it.copy(
                 operator = operator,
                 operand2 = it.operand1,
-                operand1 = 0.0,
-                fullOperation = "${it.operand2} $operator"
+                operand1 = "",
+                fullOperation = "${it.operand1} $operator"
             )
         }
     }
@@ -57,8 +57,8 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             else -> Operator.ADD
         }
         val result = calculatorModel.calculate(
-            _uiState.value.operand2,
-            _uiState.value.operand1,
+            _uiState.value.operand2.toDoubleOrNull() ?: 0.0,
+            _uiState.value.operand1.toDoubleOrNull() ?: 0.0,
             op
         )
         _uiState.update {
@@ -77,8 +77,8 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             it.copy(
                 result = 0.0,
                 prevResult = 0.0,
-                operand1 = 0.0,
-                operand2 = 0.0,
+                operand1 = "",
+                operand2 = "",
                 operator = "",
                 fullOperation = ""
             )
