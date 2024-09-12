@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kt_caclulator_app.model.CalculatorModel
+import com.example.kt_caclulator_app.model.Operator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,8 +13,9 @@ import kotlinx.coroutines.flow.update
 data class CalculatorUiState(
     val result: Double = 0.0,
     val prevResult: Double = 0.0,
-    val operand1: Int = 0,
-    val operand2: Int = 0,
+    val operand1: Double = 0.0,
+    val operand2: Double = 0.0,
+    val operator: String = "",
     val fullOperation: String = "",
 )
 
@@ -29,6 +31,41 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand1 = it.operand1 * 10 + digit,
                 fullOperation = "${it.operand1 * 10 + digit}"
 
+            )
+        }
+    }
+
+    fun onOperatorClick(operator: String) {
+        Log.d(LOG_TAG, "Operator $operator clicked")
+        _uiState.update {
+            it.copy(
+                operator = operator,
+                operand2 = it.operand1,
+                operand1 = 0.0,
+                fullOperation = "${it.operand2} $operator"
+            )
+        }
+    }
+
+    fun onEqualsClick() {
+        Log.d(LOG_TAG, "Equals clicked")
+        val op = when (_uiState.value.operator) {
+            "+" -> Operator.ADD
+            "-" -> Operator.SUBTRACT
+            "*" -> Operator.MULTIPLY
+            "/" -> Operator.DIVIDE
+            else -> Operator.ADD
+        }
+        val result = calculatorModel.calculate(
+            _uiState.value.operand2,
+            _uiState.value.operand1,
+            op
+        )
+        _uiState.update {
+            it.copy(
+                result = result,
+                prevResult = result,
+                fullOperation = "${it.operand2} ${it.operator} ${it.operand1} = $result"
             )
         }
     }
