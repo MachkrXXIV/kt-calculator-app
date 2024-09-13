@@ -8,6 +8,7 @@ class CalculatorModel() {
     private val LOG_TAG = "CalculatorModel"
     private var result: Double = 0.0
     private var prevResult: Double = 0.0
+    private var opQueue: MutableList<String> = mutableListOf()
 
     fun calculate(num1: Double, num2: Double, operator: Operator): Double {
         prevResult = result

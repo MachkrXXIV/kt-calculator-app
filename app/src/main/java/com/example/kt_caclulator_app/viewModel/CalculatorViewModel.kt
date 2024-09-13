@@ -19,10 +19,11 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
     fun onDigitClick(digit: String) {
         Log.d(LOG_TAG, "Digit $digit clicked")
         _uiState.update {
-            val newOperand1 = it.operand1 + digit
+            val newOperand = if (it.isNewOperation) digit else it.operand1 + digit
             it.copy(
-                operand1 = newOperand1,
-                fullOperation = newOperand1
+                operand1 = newOperand,
+                fullOperation = it.fullOperation + digit,
+                isNewOperation = false
             )
         }
     }
@@ -30,34 +31,42 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
     fun onOperatorClick(operator: String) {
         Log.d(LOG_TAG, "Operator $operator clicked")
         _uiState.update {
+            val currentOperand = it.operand1.toDoubleOrNull() ?: 0.0
+            val newResult = if (it.operator.isNotEmpty()) {
+                calculatorModel.calculate(
+                    it.result,
+                    currentOperand,
+                    Operator.fromString(it.operator)
+                )
+            } else {
+                currentOperand
+            }
             it.copy(
+                result = newResult,
                 operator = operator,
                 operand2 = it.operand1,
                 operand1 = "",
-                fullOperation = "${it.operand1} $operator"
+                fullOperation = "${it.fullOperation} $operator "
             )
         }
     }
 
     fun onEqualsClick() {
         Log.d(LOG_TAG, "Equals clicked")
-        val op = when (_uiState.value.operator) {
-            "+" -> Operator.ADD
-            "-" -> Operator.SUBTRACT
-            "x" -> Operator.MULTIPLY
-            "/" -> Operator.DIVIDE
-            else -> Operator.ADD
-        }
-        val result = calculatorModel.calculate(
-            _uiState.value.operand2.toDoubleOrNull() ?: 0.0,
-            _uiState.value.operand1.toDoubleOrNull() ?: 0.0,
-            op
-        )
         _uiState.update {
+            val result = calculatorModel.calculate(
+                _uiState.value.operand2.toDoubleOrNull() ?: 0.0,
+                _uiState.value.operand1.toDoubleOrNull() ?: 0.0,
+                Operator.fromString(it.operator)
+            )
             it.copy(
                 result = result,
                 prevResult = result,
-                fullOperation = "${it.operand2} ${it.operator} ${it.operand1} = $result"
+                operand1 = result.toString(),
+                operand2 = "",
+                operator = "",
+                fullOperation = "${it.fullOperation} = $result",
+                isNewOperation = true
             )
         }
     }
@@ -72,7 +81,19 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand1 = "",
                 operand2 = "",
                 operator = "",
-                fullOperation = ""
+                fullOperation = "",
+                isNewOperation = true
+            )
+        }
+    }
+
+    fun onDotClick() {
+        Log.d(LOG_TAG, "Dot clicked")
+        _uiState.update {
+            val newOperand1 = it.operand1 + "."
+            it.copy(
+                operand1 = newOperand1,
+                fullOperation = newOperand1
             )
         }
     }
