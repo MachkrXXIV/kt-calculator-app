@@ -4,20 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kt_caclulator_app.model.CalculatorModel
+import com.example.kt_caclulator_app.model.CalculatorUiState
 import com.example.kt_caclulator_app.model.Operator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-
-data class CalculatorUiState(
-    val result: Double = 0.0,
-    val prevResult: Double = 0.0,
-    val operand1: String = "",
-    val operand2: String = "",
-    val operator: String = "",
-    val fullOperation: String = "",
-)
 
 class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewModel() {
     private val LOG_TAG = "CalculatorViewModel"
