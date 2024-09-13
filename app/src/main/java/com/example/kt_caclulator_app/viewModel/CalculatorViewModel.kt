@@ -80,7 +80,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand1 = result,
                 operand2 = "",
                 operator = "",
-                fullOperation = "${it.fullOperation} = $result",
+                fullOperation = "${it.fullOperation} =",
                 lastAction = LastAction.EQUALS
             )
         }
@@ -155,7 +155,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             }
             it.copy(
                 operand1 = newOperand1,
-                fullOperation = newOperand1,
+                fullOperation = "${it.fullOperation} $newOperand1",
                 lastAction = LastAction.DIGIT
             )
         }
