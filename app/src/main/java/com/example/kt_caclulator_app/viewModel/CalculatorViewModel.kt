@@ -21,12 +21,21 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
         Log.d(LOG_TAG, "Digit $digit clicked")
         _uiState.update {
             val newOperand = if (it.isNewOperation) digit else it.operand1 + digit
-            it.copy(
-                operand1 = newOperand,
-                fullOperation = it.fullOperation + digit,
-                isNewOperation = false,
-                lastAction = LastAction.DIGIT
-            )
+            if (it.lastAction == LastAction.EQUALS) {
+                it.copy(
+                    operand1 = digit,
+                    fullOperation = digit,
+                    isNewOperation = false,
+                    lastAction = LastAction.DIGIT
+                )
+            } else {
+                it.copy(
+                    operand1 = newOperand,
+                    fullOperation = it.fullOperation + digit,
+                    isNewOperation = false,
+                    lastAction = LastAction.DIGIT
+                )
+            }
         }
     }
 
@@ -41,7 +50,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             val currentOperand = it.operand1.toDoubleOrNull() ?: 0.0
             val newResult = if (it.operator.isNotEmpty()) {
                 calculatorModel.calculate(
-                    it.result,
+                    it.result.toDouble(),
                     currentOperand,
                     Operator.fromString(it.operator)
                 )
@@ -49,7 +58,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 currentOperand
             }
             it.copy(
-                result = newResult,
+                result = newResult.toString(),
                 operator = operator,
                 operand1 = "",
                 operand2 = newResult.toString(),
@@ -70,8 +79,8 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             )
             it.copy(
                 result = result,
-                prevResult = result,
-                operand1 = result.toString(),
+                prevResult = result.toDouble(),
+                operand1 = result,
                 operand2 = "",
                 operator = "",
                 fullOperation = "${it.fullOperation} = $result",
@@ -86,7 +95,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
         calculatorModel.clear()
         _uiState.update {
             it.copy(
-                result = 0.0,
+                result = "0",
                 prevResult = 0.0,
                 operand1 = "",
                 operand2 = "",
@@ -102,7 +111,7 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
         calculatorModel.undo()
         _uiState.update {
             it.copy(
-                result = calculatorModel.getResult(),
+                result = calculatorModel.getResult().toString(),
                 prevResult = calculatorModel.getPrevResult(),
                 operand1 = calculatorModel.getResult().toString(),
                 operand2 = "",

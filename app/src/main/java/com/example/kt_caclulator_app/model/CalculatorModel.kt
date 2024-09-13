@@ -8,9 +8,8 @@ class CalculatorModel() {
     private val LOG_TAG = "CalculatorModel"
     private var result: Double = 0.0
     private var prevResult: Double = 0.0
-    private var opQueue: MutableList<String> = mutableListOf()
 
-    fun calculate(num1: Double, num2: Double, operator: Operator): Double {
+    fun calculate(num1: Double, num2: Double, operator: Operator): String {
         prevResult = result
         Log.d(LOG_TAG, "$num1 $operator $num2")
         result = when (operator) {
@@ -30,7 +29,7 @@ class CalculatorModel() {
             BigDecimal.ROUND_HALF_UP
         ).toDouble()
         Log.d(LOG_TAG, "Result: $result")
-        return result
+        return roundIfWholeNumber(result)
     }
 
     fun clear() {
@@ -48,5 +47,13 @@ class CalculatorModel() {
 
     fun getPrevResult(): Double {
         return prevResult
+    }
+
+    private fun roundIfWholeNumber(value: Double): String {
+        return if (value % 1.0 == 0.0) {
+            value.toLong().toString()
+        } else {
+            value.toString()
+        }
     }
 }
