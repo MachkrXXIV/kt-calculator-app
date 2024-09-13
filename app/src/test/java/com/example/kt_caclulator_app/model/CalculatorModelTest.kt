@@ -1,14 +1,11 @@
 package com.example.kt_caclulator_app.model
 
-import android.util.Log
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.*
 
 class CalculatorModelTest {
     private val calculatorModel = CalculatorModel()
-    private val mockLogger = mock(Log::class.java)
 
     @Before
     fun setup() {
@@ -59,7 +56,7 @@ class CalculatorModelTest {
 
     @Test
     fun `calculate multiplication with big numbers`() {
-        // will round up to 6.666533e9 but
+        // will round up to 6.666533e9 but actually has more digits
         val result = calculatorModel.calculate(66666.0, 99999.0, Operator.MULTIPLY)
         val expected = 6.666533e9
         assertEquals(expected, result, 1.0e5)

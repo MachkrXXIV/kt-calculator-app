@@ -7,5 +7,7 @@ data class CalculatorUiState(
     val operand2: String = "",
     val operator: String = "",
     val fullOperation: String = "",
-    val isNewOperation: Boolean = true
+    val isNewOperation: Boolean = true,
+    val isError: Boolean = false,
+    val lastAction: LastAction = LastAction.NONE
 )

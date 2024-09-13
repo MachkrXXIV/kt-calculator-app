@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kt_caclulator_app.model.CalculatorModel
 import com.example.kt_caclulator_app.model.CalculatorUiState
+import com.example.kt_caclulator_app.model.LastAction
 import com.example.kt_caclulator_app.model.Operator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,13 +24,19 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             it.copy(
                 operand1 = newOperand,
                 fullOperation = it.fullOperation + digit,
-                isNewOperation = false
+                isNewOperation = false,
+                lastAction = LastAction.DIGIT
             )
         }
     }
 
     fun onOperatorClick(operator: String) {
         Log.d(LOG_TAG, "Operator $operator clicked")
+        if (!isValidOperation(LastAction.OPERATOR)) {
+            Log.d(LOG_TAG, "isValid: ${isValidOperation(LastAction.OPERATOR)}")
+            return
+        }
+
         _uiState.update {
             val currentOperand = it.operand1.toDoubleOrNull() ?: 0.0
             val newResult = if (it.operator.isNotEmpty()) {
@@ -44,9 +51,11 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             it.copy(
                 result = newResult,
                 operator = operator,
-                operand2 = it.operand1,
                 operand1 = "",
-                fullOperation = "${it.fullOperation} $operator "
+                operand2 = newResult.toString(),
+                fullOperation = "${it.fullOperation} $operator ",
+                isNewOperation = true,
+                lastAction = LastAction.OPERATOR
             )
         }
     }
@@ -66,7 +75,8 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand2 = "",
                 operator = "",
                 fullOperation = "${it.fullOperation} = $result",
-                isNewOperation = true
+                isNewOperation = true,
+                lastAction = LastAction.EQUALS
             )
         }
     }
@@ -87,15 +97,58 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
         }
     }
 
+    fun onUndoClick() {
+        Log.d(LOG_TAG, "Undo clicked")
+        calculatorModel.undo()
+        _uiState.update {
+            it.copy(
+                result = calculatorModel.getResult(),
+                prevResult = calculatorModel.getPrevResult(),
+                operand1 = calculatorModel.getResult().toString(),
+                operand2 = "",
+                operator = "",
+                fullOperation = calculatorModel.getResult().toString(),
+                isNewOperation = true
+            )
+        }
+    }
+
     fun onDotClick() {
         Log.d(LOG_TAG, "Dot clicked")
+        if (!isValidOperation(LastAction.DOT)) {
+            Log.d(LOG_TAG, "isValid: ${isValidOperation(LastAction.DOT)}")
+            return
+        }
         _uiState.update {
             val newOperand1 = it.operand1 + "."
             it.copy(
                 operand1 = newOperand1,
-                fullOperation = newOperand1
+                fullOperation = newOperand1,
+                lastAction = LastAction.DOT
             )
         }
+    }
+
+    private fun isValidOperation(nextAction: LastAction): Boolean {
+        val isValidAction = when (_uiState.value.lastAction) {
+            LastAction.DIGIT -> nextAction == LastAction.OPERATOR ||
+                    nextAction == LastAction.EQUALS ||
+                    nextAction == LastAction.DOT
+
+            LastAction.OPERATOR -> nextAction == LastAction.DIGIT
+            LastAction.EQUALS -> nextAction == LastAction.DIGIT || nextAction == LastAction.OPERATOR
+            LastAction.DOT -> nextAction == LastAction.DIGIT
+            LastAction.NONE -> nextAction == LastAction.DIGIT
+            else -> true
+        }
+        if (!isValidAction) {
+            _uiState.update {
+                it.copy(
+                    fullOperation = "ERROR: INVALID OPERATION",
+                )
+            }
+        }
+        return isValidAction
     }
 
     // big templated constructor
