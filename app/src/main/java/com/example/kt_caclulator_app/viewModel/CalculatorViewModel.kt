@@ -20,19 +20,17 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
     fun onDigitClick(digit: String) {
         Log.d(LOG_TAG, "Digit $digit clicked")
         _uiState.update {
-            val newOperand = if (it.isNewOperation) digit else it.operand1 + digit
+            val newOperand = it.operand1 + digit
             if (it.lastAction == LastAction.EQUALS) {
                 it.copy(
                     operand1 = digit,
                     fullOperation = digit,
-                    isNewOperation = false,
                     lastAction = LastAction.DIGIT
                 )
             } else {
                 it.copy(
                     operand1 = newOperand,
                     fullOperation = it.fullOperation + digit,
-                    isNewOperation = false,
                     lastAction = LastAction.DIGIT
                 )
             }
@@ -63,7 +61,6 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand1 = "",
                 operand2 = newResult.toString(),
                 fullOperation = "${it.fullOperation} $operator ",
-                isNewOperation = true,
                 lastAction = LastAction.OPERATOR
             )
         }
@@ -84,7 +81,6 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand2 = "",
                 operator = "",
                 fullOperation = "${it.fullOperation} = $result",
-                isNewOperation = true,
                 lastAction = LastAction.EQUALS
             )
         }
@@ -101,23 +97,66 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                 operand2 = "",
                 operator = "",
                 fullOperation = "",
-                isNewOperation = true
+                lastAction = LastAction.CLEAR
             )
         }
     }
 
     fun onUndoClick() {
         Log.d(LOG_TAG, "Undo clicked")
-        calculatorModel.undo()
         _uiState.update {
+            when (it.lastAction) {
+                LastAction.DIGIT -> {
+                    val newOperand1 = it.operand1.dropLast(1)
+                    it.copy(
+                        operand1 = newOperand1,
+                        fullOperation = newOperand1,
+                        lastAction = LastAction.DIGIT
+                    )
+                }
+
+                LastAction.OPERATOR -> {
+                    val newFullOperation = it.fullOperation.dropLast(2)
+                    it.copy(
+                        fullOperation = newFullOperation,
+                        lastAction = LastAction.OPERATOR
+                    )
+                }
+
+                LastAction.EQUALS -> {
+                    val newFullOperation = it.fullOperation.dropLast(2)
+                    it.copy(
+                        fullOperation = newFullOperation,
+                        lastAction = LastAction.EQUALS
+                    )
+                }
+
+                LastAction.DOT -> {
+                    val newOperand1 = it.operand1.dropLast(1)
+                    it.copy(
+                        operand1 = newOperand1,
+                        fullOperation = newOperand1,
+                        lastAction = LastAction.DOT
+                    )
+                }
+
+                else -> it
+            }
+        }
+    }
+
+    fun onSignChangeClick() {
+        Log.d(LOG_TAG, "Sign change clicked")
+        _uiState.update {
+            val newOperand1 = if (it.operand1.startsWith("-")) {
+                it.operand1.drop(1)
+            } else {
+                "-${it.operand1}"
+            }
             it.copy(
-                result = calculatorModel.getResult().toString(),
-                prevResult = calculatorModel.getPrevResult(),
-                operand1 = calculatorModel.getResult().toString(),
-                operand2 = "",
-                operator = "",
-                fullOperation = calculatorModel.getResult().toString(),
-                isNewOperation = true
+                operand1 = newOperand1,
+                fullOperation = newOperand1,
+                lastAction = LastAction.DIGIT
             )
         }
     }
@@ -145,12 +184,16 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
                     nextAction == LastAction.DOT
 
             LastAction.OPERATOR -> nextAction == LastAction.DIGIT
-            LastAction.EQUALS -> nextAction == LastAction.DIGIT || nextAction == LastAction.OPERATOR
+            LastAction.EQUALS -> nextAction == LastAction.DIGIT ||
+                    nextAction == LastAction.OPERATOR ||
+                    nextAction == LastAction.DOT
+
             LastAction.DOT -> nextAction == LastAction.DIGIT
-            LastAction.NONE -> nextAction == LastAction.DIGIT
+            LastAction.NONE -> nextAction == LastAction.DIGIT || nextAction == LastAction.DOT
             else -> true
         }
         if (!isValidAction) {
+            Log.d(LOG_TAG, "Invalid operation $nextAction after ${_uiState.value.lastAction}")
             _uiState.update {
                 it.copy(
                     fullOperation = "ERROR: INVALID OPERATION",

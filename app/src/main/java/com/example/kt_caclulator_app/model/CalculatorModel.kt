@@ -1,7 +1,6 @@
 package com.example.kt_caclulator_app.model
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import java.math.BigDecimal
 
 class CalculatorModel() {
@@ -37,23 +36,18 @@ class CalculatorModel() {
         prevResult = 0.0
     }
 
-    fun undo() {
-        result = prevResult
-    }
-
     fun getResult(): Double {
         return result
     }
 
-    fun getPrevResult(): Double {
-        return prevResult
-    }
-
     private fun roundIfWholeNumber(value: Double): String {
-        return if (value % 1.0 == 0.0) {
-            value.toLong().toString()
+        val v = BigDecimal(value).setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
+        return if (v.stripTrailingZeros().scale() <= 0) {
+            Log.d(LOG_TAG, "plainString: ${v.toPlainString()}")
+            v.toLong().toString()
         } else {
-            value.toString()
+            Log.d(LOG_TAG, "plainString: ${v.toPlainString()}")
+            v.toPlainString()
         }
     }
 }

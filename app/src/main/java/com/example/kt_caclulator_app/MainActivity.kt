@@ -56,15 +56,17 @@ class MainActivity : AppCompatActivity() {
         val btnEqual = findViewById<Button>(R.id.btnEqual)
         val btnClear = findViewById<Button>(R.id.btnClear)
         val btnUndo = findViewById<Button>(R.id.btnUndo)
+        val btnSign = findViewById<Button>(R.id.btnSign)
         val btnDot = findViewById<Button>(R.id.btnDot)
+
         btnEqual.setOnClickListener {
             calculatorViewModel.onEqualsClick()
-            tvResultDisplay.text = calculatorViewModel.uiState.value.result.toString()
+            tvResultDisplay.text = calculatorViewModel.uiState.value.result
             tvCalculationDisplay.text = calculatorViewModel.uiState.value.fullOperation
         }
         btnClear.setOnClickListener {
             calculatorViewModel.onClearClick()
-            tvResultDisplay.text = calculatorViewModel.uiState.value.result.toString()
+            tvResultDisplay.text = calculatorViewModel.uiState.value.result
             tvCalculationDisplay.text = calculatorViewModel.uiState.value.fullOperation
         }
         btnDot.setOnClickListener {
@@ -73,7 +75,12 @@ class MainActivity : AppCompatActivity() {
         }
         btnUndo.setOnClickListener {
             calculatorViewModel.onUndoClick()
-            tvResultDisplay.text = calculatorViewModel.uiState.value.result.toString()
+            tvResultDisplay.text = calculatorViewModel.uiState.value.result
+            tvCalculationDisplay.text = calculatorViewModel.uiState.value.fullOperation
+        }
+        btnSign.setOnClickListener {
+            calculatorViewModel.onSignChangeClick()
+            tvResultDisplay.text = calculatorViewModel.uiState.value.result
             tvCalculationDisplay.text = calculatorViewModel.uiState.value.fullOperation
         }
     }
