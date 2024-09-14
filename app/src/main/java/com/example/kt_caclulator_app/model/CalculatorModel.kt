@@ -23,12 +23,8 @@ class CalculatorModel() {
                 }
             }
         }
-        result = if (result.isNaN()) result else BigDecimal(result).setScale(
-            8,
-            BigDecimal.ROUND_HALF_UP
-        ).toDouble()
         Log.d(LOG_TAG, "Result: $result")
-        return roundIfWholeNumber(result)
+        return if (result.isNaN()) "ERROR: DIVIDE BY ZERO" else roundIfWholeNumber(result)
     }
 
     fun clear() {

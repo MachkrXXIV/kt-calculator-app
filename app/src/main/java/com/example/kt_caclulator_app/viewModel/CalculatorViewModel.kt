@@ -76,7 +76,6 @@ class CalculatorViewModel(private val calculatorModel: CalculatorModel) : ViewMo
             )
             it.copy(
                 result = result,
-                prevResult = result.toDouble(),
                 operand1 = result,
                 operand2 = "",
                 operator = "",

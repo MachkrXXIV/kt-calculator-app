@@ -66,7 +66,7 @@ class CalculatorModelTest {
     @Test
     fun `calculate division with big num2`() {
         val result = calculatorModel.calculate(2.0, 10000000.0, Operator.DIVIDE)
-        val expected = "2.0E-7"
+        val expected = "0.0000002"
         assertEquals(expected, result)
     }
 
@@ -82,7 +82,7 @@ class CalculatorModelTest {
     @Test
     fun `calculate divide by zero shows NaN`() {
         val result = calculatorModel.calculate(5.0, 0.0, Operator.DIVIDE)
-        val expected = "${Double.NaN}"
+        val expected = "ERROR: DIVIDE BY ZERO"
         assertEquals(expected, result)
     }
 }
